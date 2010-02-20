@@ -35,7 +35,10 @@ def rewrite_image_tags(body, key, app_url=None, try_xhtml=False):
             parts = path.split('/')
             parts.insert(-1, 'bitblt-%sx%s-%s' % (width, height, signature))
                 
+            path_is_absolute = path.startswith('/')
             path = '/'.join(filter(None, parts))
+            if path_is_absolute:
+                path = '/%s' % path
 
             img.attrib['src'] = urlparse.urlunparse(
                 (scheme, netloc, path, params, query, fragment))
